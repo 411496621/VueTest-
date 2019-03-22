@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -22,11 +22,23 @@
 <!--需求: 对当前时间进行指定格式显示-->
 <div id="test">
   <h2>显示格式化的日期时间</h2>
+  <p>{{time}}</p>
+  <p>{{time | formatTime}}</p>
+  <p>{{time | formatTime('YYYY-MM-DD')}}</p>
+  <p>{{time | formatTime('HH:mm:ss')}}</p>
 </div>
-
+<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.js"></script>
 <script type="text/javascript" src="../js/vue.js"></script>
 <script>
-
+  Vue.filter('formatTime',function (value,format) {
+    return moment(value).format(format || 'YYYY-MM-DD HH:mm:ss')
+  })
+ new Vue({
+   el:'#test',
+   data:{
+     time:Date.now()-1000,
+   }
+ })
 </script>
 </body>
 </html>

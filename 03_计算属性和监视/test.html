@@ -17,15 +17,65 @@
   计算属性存在缓存, 多次读取只执行一次getter计算
 -->
 <div id="demo">
-  姓: <input type="text" placeholder="First Name"><br>
-  名: <input type="text" placeholder="Last Name"><br>
-  姓名1(单向): <input type="text" placeholder="Full Name1"><br>
-  姓名2(单向): <input type="text" placeholder="Full Name2"><br>
-  姓名3(双向): <input type="text" placeholder="Full Name3"><br>
+  姓: <input type="text" placeholder="First Name" v-model="firstName"><br>
+  名: <input type="text" placeholder="Last Name" v-model="lastName"><br>
+  姓名1(单向): <input type="text" placeholder="Full Name1" v-model="fullName1"><br>
+  姓名2(单向): <input type="text" placeholder="Full Name2" v-model="fullName2"><br>
+  姓名3(双向): <input type="text" placeholder="Full Name3" v-model="fullName3"><br>
+  <p>{{fullName1}}</p>
+  <p>{{fullName1}}</p>
+  <p>{{fullName1}}</p>
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
+  const vm = new Vue({
+    el:'#demo',
+    data:{
+      firstName:'A',
+      lastName:'B',
+      fullName3:'A-B'
+    },
+    computed:{
+      /*fullName1:{
+        get(){
+          const {firstName,lastName} = this
+          return firstName + '-' +lastName
+        }
+      }*/
+      fullName1(){ // 当初始化显示/相关数据发生变化时 自动调用
+        const {firstName,lastName} = this
+        console.log("fullName1() get()")
+        return firstName + '-' +lastName
+      },
+      fullName2:{
+        get(){
+          const {firstName,lastName} = this
+          return firstName + '-' +lastName
+        },
+        set(value){
+          const names = value.split('-')
+          this.firstName = names[0]
+          this.lastName = names[1]
+        }
+      }
+    },
+    watch:{
+      firstName(value){
+        this.fullName3 = value + '-' + this.lastName
+      },
+      lastName(value){
+        this.fullName3 = this.firstName + '-' + value
+      },
+    }
+  })
+  vm.$watch('fullName3',function (value) {
+    console.log("===")
+    const names = value.split('-')
+    this.firstName = names[0]
+    this.lastName = names[1]
+  })
+
 
 </script>
 </body>

@@ -31,12 +31,36 @@
 
 <div id="app">
   <h2>1. 双大括号表达式</h2>
+  <p>{{msg}}</p>
+  <p>{{msg.toUpperCase()}}</p>
 
   <h2>2. 指令一: 强制数据绑定</h2>
+  <a href="url">去培训</a> <br>
+  <a v-bind:href="url">去培训</a> <br>
+  <a :href="url">去培训</a>
 
   <h2>3. 指令二: 绑定事件监听</h2>
+  <button v-on:click="test">test1</button>
+  <button @click="test">test2</button>
 
 </div>
 
 </body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+  const  vm = new Vue({
+    el:'#app',
+    data:{ // data中定义了哪些数据 Vue自动给vm添加哪些属性
+      msg:'I Love This Game',
+      url:'http://www.atguigu.com'
+    },
+    methods:{
+      test(){ // 所有由Vue控制的回调函数 this都是vm
+         alert(this.msg)
+        console.log(this)
+      }
+    }
+  })
+  console.log(vm,vm.msg,vm._data.msg)
+</script>
 </html>

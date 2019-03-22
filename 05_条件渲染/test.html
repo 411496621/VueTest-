@@ -15,10 +15,29 @@
 -->
 
 <div id="demo">
+   <p v-if="isShow">表白成功</p>
+   <p v-else>表白失败</p>
+
+   <p v-show="isShow">求婚成功</p>
+   <p v-show="!isShow">求婚失败</p>
+   <button @click="update">更新</button>
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
+  new Vue({
+    el:'#demo',
+    data(){
+      return {
+        isShow:true,
+      }
+    },
+    methods:{
+      update(){
+        this.isShow = !this.isShow
+      }
+    }
+  })
 </script>
 </body>
 </html>
